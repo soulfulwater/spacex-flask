@@ -14,7 +14,16 @@ def dashboard():
     if launches == 'error':
         return render_template('error.html', error=True)
     else:
-        return render_template('dashboard.html', launches=launches)
+        return render_template('bs/dashboard.html', launches=launches)
+
+
+@app.route('/all-launches/')
+def launches():
+    launches = get_launches(return_all=True)
+    if launches == 'error':
+        return render_template('error.html', error=True)
+    else:
+        return render_template('bs/launches.html', launches=launches)
 
 
 @app.route('/launch/<int:launch_id>')
