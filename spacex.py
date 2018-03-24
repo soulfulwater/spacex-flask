@@ -1,5 +1,7 @@
 from datetime import datetime
-from flask import Flask, render_template
+import random
+
+from flask import Flask, render_template, redirect, url_for
 
 from app.dashboard import get_launches
 from app.details import get_launch_details
@@ -31,9 +33,17 @@ def launches():
 def launch(launch_id):
     launch_details = get_launch_details(launch_id)
     if launch == 'error':
-        return render_template('error.html', error=True)
+        return render_template('bs/error.html', error=True)
     else:
         return render_template('bs/launch_detail.html', launch=launch_details)
+
+
+@app.route('/random/')
+def random_launch():
+    launches = get_launches(return_all=True)
+    secure_random = random.SystemRandom()
+    choice = secure_random.choice(launches)
+    return redirect(url_for('launch', launch_id=choice['flight_number']))
 
 
 @app.template_filter('dt')
