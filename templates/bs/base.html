@@ -8,13 +8,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Scrolling Nav - Start Bootstrap Template</title>
+    <title>{% block title %}{% endblock %} | By AJ Dev</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/static/css/scrolling-nav.css" rel="stylesheet">
+
+    {# Favicon #}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
   </head>
 
