@@ -1,0 +1,106 @@
+{% extends 'bs/base.html' %}
+{% block title %}Space X Launch {{ launch.flight_number }}{% endblock %}
+
+{% block content %}
+
+    <header class="bg-primary text-white">
+        <div class="container text-center">
+            <h1>Space X Launch {{ launch.flight_number }}</h1>
+            <p class="lead">From the Space X Data ReST API</p>
+        </div>
+    </header>
+
+    <div class="py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Flight Information</h3>
+                    <p>Launch Date: {{ launch.launch_date_utc|detail_dt }}<br>
+                        Rocket: {{ launch.rocket.rocket_name }}<br>
+                        Successful Launch: {% if launch.launch_success %}Yes{% else %}No{% endif %}<br>
+                        Launch Site: {{ launch.launch_site.site_name_long }}<br>
+                        {% if launch.links.article_link %}
+                            Official Article: <a href="{{ launch.links.article_link }}">{{ launch.links.article_link }}</a><br>
+                        {% endif %}</p>
+                    <hr>
+                </div>
+            </div>
+                <div class="row">
+                <div class="col-sm-12">
+                    <h3>Flight Details</h3>
+                    <p>{{ launch.details }}</p>
+                    <hr>
+                                </div>
+            </div>
+                        <div class="row">
+                <div class="col-sm-12">
+                    <h3>Core Information</h3>
+                    {% for core in launch.rocket.first_stage.cores %}
+                    <p><strong>Core {{ loop.index }}</strong><br>
+                    Serial No: {{ core.core_serial }}<br>
+                    Flight No: {{ core.flight }}<br>
+                    Reused?: {% if core.reused %}Yes{% else %}No{% endif %}<br>
+                    Successful Landing?: {% if core.land_success %}Yes{% elif core.land_success == False %}No{% else %}Not Attempted{% endif %}<br>
+                    </p>
+                    {% endfor %}
+                    <hr>
+                                </div>
+            </div>
+                                <div class="row">
+                <div class="col-sm-12">
+                    <h3>Payload Information</h3>
+                                        {% for payload in launch.rocket.second_stage.payloads %}
+                    <p><strong>Payload {{ loop.index }}</strong><br>
+                    Payload: {{ payload.payload_id }}<br>
+                    {% if payload.customers|length > 1 %}Customers: {% else %}Customer: {% endif %}{% for customer in payload.customers %}{% if loop.last %}{{ customer }}{% else %}{{ customer }}, {% endif %}{% endfor %}<br>
+                    Payload Type: {{ payload.payload_type }}<br>
+                    Orbit: {{ payload.orbit }}<br>
+                    </p>
+                    {% endfor %}
+                    <hr>
+                                </div>
+            </div>
+                <div class="row">
+                <div class="col-sm-12">
+                    <h3>Reddit Threads</h3>
+                    <p>Reddit Campaign Thread:
+                        {% if launch.links.reddit_campaign %}<a href="{{ launch.links.reddit_campaign }}">{{ launch.links.reddit_campaign }}</a>{% else %}N/A{% endif %}
+                        <br>
+                    Reddit Launch Thread:
+                        {% if launch.links.reddit_launch %}<a href="{{ launch.links.reddit_launch }}">{{ launch.links.reddit_launch }}</a>{% else %}N/A{% endif %}<br>
+                                        Reddit Media Thread:
+                        {% if launch.links.reddit_media %}<a href="{{ launch.links.reddit_media }}">{{ launch.links.reddit_media }}</a>{% else %}N/A{% endif %}<br>
+                    </p>
+                    <hr>
+                                </div>
+            </div>
+                <div class="row">
+                <div class="col-sm-12">
+                    <h3>Flight Video</h3>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="560"
+                                height="315"
+                                src="https://www.youtube-nocookie.com/embed/{{ launch.links.video_link|yt }}?rel=0&amp;showinfo=0"
+                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Contact us</h2>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero odio fugiat
+                        voluptatem dolor, provident officiis, id iusto! Obcaecati incidunt, qui nihil beatae magnam et
+                        repudiandae ipsa exercitationem, in, quo totam.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

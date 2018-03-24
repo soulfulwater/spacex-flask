@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, render_template
 
 from app.dashboard import get_launches
@@ -12,7 +13,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 def dashboard():
     launches = get_launches()
     if launches == 'error':
-        return render_template('error.html', error=True)
+        return render_template('bs/error.html', error=True)
     else:
         return render_template('bs/dashboard.html', launches=launches)
 
@@ -21,9 +22,9 @@ def dashboard():
 def launches():
     launches = get_launches(return_all=True)
     if launches == 'error':
-        return render_template('error.html', error=True)
+        return render_template('bs/error.html', error=True)
     else:
-        return render_template('bs/launches.html', launches=launches)
+        return render_template('bs/alllaunches.html', launches=launches)
 
 
 @app.route('/launch/<int:launch_id>')
@@ -32,12 +33,17 @@ def launch(launch_id):
     if launch == 'error':
         return render_template('error.html', error=True)
     else:
-        return render_template('launch_detail.html', launch=launch_details)
+        return render_template('bs/launch_detail.html', launch=launch_details)
 
 
 @app.template_filter('dt')
 def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)
+
+@app.template_filter('detail_dt')
+def datetimeformat_detail(value, format='%H:%M / %d-%m-%Y'):
+    datetime_object = datetime.strptime(value, '%Y-%m-%dT%H:%M:%SZ')
+    return datetime_object.strftime(format)
 
 @app.template_filter('yt')
 def youtubelink(link):
