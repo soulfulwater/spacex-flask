@@ -65,7 +65,7 @@ def youtubelink(link):
 
 @app.context_processor
 def inject_readme():
-    with open(os.path.join(APP_ROOT, 'readme.md')) as f:
+    with open(os.path.join(APP_ROOT, 'README.md')) as f:
         content = f.read()
         return dict(readme=content)
 
