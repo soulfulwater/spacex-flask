@@ -22,9 +22,9 @@
                 {% for item in launches %}
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
-                        <img class="card-img-top"
+                        <img class="card-img-top img-custom"
                              src="{{ item.mission_patch }}"
-                             alt="Card image cap" style="width: 100%; height: 15vw; object-fit: cover;">
+                             alt="Card image cap">
                         <div class="card-body">
                             <h5>Launch No: {{ item.flight_number }}</h5>
                             <p class="card-text">Launch Time/Date: {{ item.launch_date|dt }}

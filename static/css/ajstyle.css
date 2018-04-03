@@ -1,0 +1,7 @@
+@media(min-width: 767px){
+   .img-custom{
+        width: 100%;
+        height: 15vw;
+        object-fit: cover;
+   }
+}
