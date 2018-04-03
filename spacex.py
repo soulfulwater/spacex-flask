@@ -1,15 +1,19 @@
 from datetime import datetime
 import random
 
+import os
 from flask import Flask, render_template, redirect, url_for
+from flaskext.markdown import Markdown
+
 
 from app.dashboard import get_launches
 from app.details import get_launch_details
 
 app = Flask(__name__)
-
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+Markdown(app)
 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 @app.route('/')
 def dashboard():
@@ -58,6 +62,13 @@ def datetimeformat_detail(value, format='%H:%M / %d-%m-%Y'):
 @app.template_filter('yt')
 def youtubelink(link):
     return link[32:]
+
+@app.context_processor
+def inject_readme():
+    with open(os.path.join(APP_ROOT, 'readme.md')) as f:
+        content = f.read()
+        return dict(readme=content)
+
 
 
 if __name__ == '__main__':
