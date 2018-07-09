@@ -56,7 +56,7 @@ def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
 
 @app.template_filter('detail_dt')
 def datetimeformat_detail(value, format='%H:%M / %d-%m-%Y'):
-    datetime_object = datetime.strptime(value, '%Y-%m-%dT%H:%M:%SZ')
+    datetime_object = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%fZ')
     return datetime_object.strftime(format)
 
 @app.template_filter('yt')
