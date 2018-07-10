@@ -3,6 +3,7 @@ import random
 
 import os
 from flask import Flask, render_template, redirect, url_for
+from flask_sslify import SSLify
 from flaskext.markdown import Markdown
 
 
@@ -10,6 +11,7 @@ from app.dashboard import get_launches
 from app.details import get_launch_details
 
 app = Flask(__name__)
+sslify = SSLify(app)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 Markdown(app)
 
